@@ -9,24 +9,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/styles/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <meta name="description" content="Roman to Integer C++ solution with explanation." />
   <meta name="robots" content="index,follow" />
   <link rel="canonical" href="roman-to-int.html" />
+  <meta property="og:title" content="Roman to Integer" />
+  <meta property="og:description" content="C++ solution with time/space analysis and explanation." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://emirhaninan.github.io/roman-to-int.html" />
+  <meta property="og:image" content="https://emirhaninan.github.io/assets/og/roman-to-int.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 </head>
 <body>
+  <a class="skip-link" href="#content">Skip to content</a>
   <header class="site-header">
     <div class="container">
-      <a class="site-title" href="./">LeetCode Solutions</a>
+      <a class="site-title" href="./">⚡ LeetCode Solutions</a>
+      <div class="site-actions">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle color theme">Toggle theme</button>
+      </div>
     </div>
   </header>
 
-  <main class="container">
+  <main id="content" class="container" tabindex="-1">
     <article class="post-card">
       <header class="post-header">
         <h1 class="post-title">Roman to Integer</h1>
         <div class="post-meta">C++ | Time O(n), Space O(1)</div>
       </header>
       <div class="post-content">
+        <div class="problem-meta">
+          <div><span class="badge difficulty-easy">Difficulty: Easy</span></div>
+          <div><span class="badge">Tags: Hash Map, String</span></div>
+          <div><span class="badge">Constraints: 1 ≤ |s| ≤ 15</span></div>
+          <div><a class="badge" href="https://leetcode.com/problems/roman-to-integer/" target="_blank" rel="noopener noreferrer">View on LeetCode ↗</a></div>
+        </div>
         <h2>Problem</h2>
         <p>Given a Roman numeral string <code>s</code>, convert it to an integer. Subtractive pairs like <code>IV</code>, <code>IX</code>, <code>XL</code>, <code>XC</code>, <code>CD</code>, <code>CM</code> are allowed.</p>
         <p>Constraints: <code>1 &lt;= s.length &lt;= 15</code>, characters are in <code>{I, V, X, L, C, D, M}</code>.</p>
@@ -37,7 +54,70 @@
           <li>Scan left to right; if current value is less than the next, subtract, else add.</li>
         </ul>
 
-        <h2>C++ Code</h2>
+        <h2>Step-by-step</h2>
+
+        <pre><code class="language-cpp">#include &lt;string&gt;
+using namespace std;
+        </code></pre>
+        <div class="explain">
+          <ul>
+            <li><strong>#include &lt;string&gt;</strong>: enables use of <code>std::string</code>.</li>
+            <li><strong>using namespace std;</strong>: avoids writing <code>std::</code> repeatedly.</li>
+          </ul>
+        </div>
+
+        <pre><code class="language-cpp">class Solution {
+public:
+    int romanToInt(const string&amp; s) {
+        </code></pre>
+        <div class="explain">
+          <ul>
+            <li><strong>class Solution</strong>: LeetCode convention.</li>
+            <li><strong>public</strong>: make the method accessible for tests.</li>
+            <li><strong>const string&amp; s</strong>: pass by const reference to avoid copying.</li>
+          </ul>
+        </div>
+
+        <pre><code class="language-cpp">        static int values[256] = {0};
+        static bool initialized = false;
+        if (!initialized) {
+            values['I'] = 1;
+            values['V'] = 5;
+            values['X'] = 10;
+            values['L'] = 50;
+            values['C'] = 100;
+            values['D'] = 500;
+            values['M'] = 1000;
+            initialized = true;
+        }
+        </code></pre>
+        <div class="explain">
+          <ul>
+            <li><strong>values[256]</strong>: O(1) ASCII lookup table (256 possible <code>char</code> values).</li>
+            <li>Initialize once using an <strong>initialized</strong> flag.</li>
+            <li>Map Roman numerals to their integer values.</li>
+          </ul>
+        </div>
+
+        <pre><code class="language-cpp">        int total = 0;
+        for (size_t i = 0; i &lt; s.size(); i++) {
+            int val = values[(unsigned char)s[i]];
+            int next = (i + 1 &lt; s.size()) ? values[(unsigned char)s[i+1]] : 0;
+            total += (val &lt; next) ? -val : val;
+        }
+        return total;
+    }
+};
+        </code></pre>
+        <div class="explain">
+          <ul>
+            <li><strong>val</strong> and <strong>next</strong>: current and next numeral values.</li>
+            <li><strong>Rule</strong>: if current &lt; next, subtract; else add.</li>
+            <li>Time: O(n); Space: O(1).</li>
+          </ul>
+        </div>
+
+        <h2>Full Solution (C++)</h2>
         <pre><code class="language-cpp">#include &lt;string&gt;
 using namespace std;
 
@@ -102,6 +182,36 @@ public:
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/cpp.min.js"></script>
   <script>try{hljs.highlightAll();}catch(e){}</script>
+  <script>
+    (function(){
+      try {
+        var storageKey = 'theme-preference';
+        var el = document.documentElement;
+        var setTheme = function(theme){ el.setAttribute('data-theme', theme); };
+        var saved = localStorage.getItem(storageKey);
+        if (saved) setTheme(saved);
+        var btn = document.getElementById('themeToggle');
+        if (btn) {
+          btn.addEventListener('click', function(){
+            var current = el.getAttribute('data-theme') || '';
+            var next = current === 'dark' ? 'light' : 'dark';
+            setTheme(next);
+            localStorage.setItem(storageKey, next);
+          });
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "Roman to Integer",
+    "datePublished": "2025-08-20",
+    "url": "https://emirhaninan.github.io/roman-to-int.html",
+    "about": "LeetCode Roman to Integer solution in C++"
+  }
+  </script>
 </body>
 </html>
 
