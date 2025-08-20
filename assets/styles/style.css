@@ -6,6 +6,8 @@
   --primary: #60a5fa;
   --border: rgba(255,255,255,0.08);
   --code-bg: #0b1020;
+  --inline-code-bg: rgba(99,102,241,0.18);
+  --inline-code-text: #e6edff;
 }
 
 @media (prefers-color-scheme: light) {
@@ -17,6 +19,8 @@
     --primary: #2563eb;
     --border: rgba(0,0,0,0.08);
     --code-bg: #0a0f1a;
+    --inline-code-bg: rgba(37,99,235,0.12);
+    --inline-code-text: #1f2937;
   }
 }
 
@@ -124,10 +128,16 @@ pre, .highlight pre {
 
 /* Inline code */
 p code, li code {
-  background: rgba(99,102,241,0.12);
-  color: #dbeafe;
+  background: var(--inline-code-bg);
+  color: var(--inline-code-text);
   padding: 2px 6px;
   border-radius: 6px;
+}
+
+/* Ensure inline code inside callouts stays readable */
+.explain code, blockquote code {
+  background: var(--inline-code-bg);
+  color: var(--inline-code-text);
 }
 
 /* Explanation callout */
