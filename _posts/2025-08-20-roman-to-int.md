@@ -3,6 +3,24 @@ layout: post
 title: "Roman to Integer"
 ---
 
+## Problem
+Given a Roman numeral string `s`, convert it to an integer. Roman numerals are usually written largest to smallest from left to right, except for the subtractive cases (e.g., `IV = 4`, `IX = 9`, `XL = 40`, `XC = 90`, `CD = 400`, `CM = 900`).
+
+Constraints: `1 <= s.length <= 15`, `s` contains only `I, V, X, L, C, D, M`.
+
+## Approach
+- Map each Roman character to its integer value.
+- Scan left to right:
+  - If the current value is less than the next value, subtract it.
+  - Otherwise, add it.
+
+This works because subtractive pairs are the only time a smaller numeral precedes a larger one.
+
+## Complexity
+- **Time**: O(n) where n is the length of `s`.
+- **Space**: O(1) extra space.
+
+## C++ Code
 ```cpp
 #include <string>
 using namespace std;
