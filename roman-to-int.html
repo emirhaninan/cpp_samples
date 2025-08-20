@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Roman to Integer | LeetCode Solutions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles/style.css">
+  <meta name="description" content="Roman to Integer C++ solution with explanation." />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="roman-to-int.html" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a class="site-title" href="./">LeetCode Solutions</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post-card">
+      <header class="post-header">
+        <h1 class="post-title">Roman to Integer</h1>
+        <div class="post-meta">C++ | Time O(n), Space O(1)</div>
+      </header>
+      <div class="post-content">
+        <h2>Problem</h2>
+        <p>Given a Roman numeral string <code>s</code>, convert it to an integer. Subtractive pairs like <code>IV</code>, <code>IX</code>, <code>XL</code>, <code>XC</code>, <code>CD</code>, <code>CM</code> are allowed.</p>
+        <p>Constraints: <code>1 &lt;= s.length &lt;= 15</code>, characters are in <code>{I, V, X, L, C, D, M}</code>.</p>
+
+        <h2>Approach</h2>
+        <ul>
+          <li>Map each Roman character to its integer value.</li>
+          <li>Scan left to right; if current value is less than the next, subtract, else add.</li>
+        </ul>
+
+        <h2>C++ Code</h2>
+        <pre><code>#include &lt;string&gt;
+using namespace std;
+
+class Solution {
+public:
+    int romanToInt(const string&amp; s) {
+        static int values[256] = {0};
+        static bool initialized = false;
+        if (!initialized) {
+            values['I'] = 1;
+            values['V'] = 5;
+            values['X'] = 10;
+            values['L'] = 50;
+            values['C'] = 100;
+            values['D'] = 500;
+            values['M'] = 1000;
+            initialized = true;
+        }
+
+        int total = 0;
+        for (size_t i = 0; i &lt; s.size(); i++) {
+            int val = values[(unsigned char)s[i]];
+            int next = (i+1 &lt; s.size()) ? values[(unsigned char)s[i+1]] : 0;
+            total += (val &lt; next) ? -val : val;
+        }
+        return total;
+    }
+};
+        </code></pre>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© <span id="y"></span> · LeetCode Solutions</p>
+    </div>
+  </footer>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+  <script>
+  (function() {
+    try {
+      var blocks = document.querySelectorAll('pre');
+      blocks.forEach(function(pre) {
+        pre.style.position = pre.style.position || 'relative';
+        var btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.type = 'button';
+        btn.textContent = 'Copy';
+        btn.addEventListener('click', function() {
+          var text = pre.innerText;
+          navigator.clipboard.writeText(text).then(function() {
+            btn.textContent = 'Copied!';
+            setTimeout(function(){ btn.textContent = 'Copy'; }, 1500);
+          });
+        });
+        pre.appendChild(btn);
+      });
+    } catch (e) {}
+  })();
+  </script>
+</body>
+</html>
+
