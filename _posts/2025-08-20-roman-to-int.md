@@ -1,0 +1,34 @@
+---
+layout: post
+title: "Roman to Integer"
+---
+
+```cpp
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    int romanToInt(const string& s) {
+        static int values[256] = {0};
+        static bool initialized = false;
+        if (!initialized) {
+            values['I'] = 1;
+            values['V'] = 5;
+            values['X'] = 10;
+            values['L'] = 50;
+            values['C'] = 100;
+            values['D'] = 500;
+            values['M'] = 1000;
+            initialized = true;
+        }
+
+        int total = 0;
+        for (size_t i = 0; i < s.size(); i++) {
+            int val = values[(unsigned char)s[i]];
+            int next = (i+1 < s.size()) ? values[(unsigned char)s[i+1]] : 0;
+            total += (val < next) ? -val : val;
+        }
+        return total;
+    }
+};

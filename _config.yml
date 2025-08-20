@@ -1,0 +1,10 @@
+title: LeetCode Solutions
+description: "Annotated C++ solutions for LeetCode problems"
+baseurl: ""
+url: "https://yourusername.github.io"
+
+theme: minima
+markdown: kramdown
+
+kramdown:
+  syntax_highlighter: rouge

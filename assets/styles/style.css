@@ -1,0 +1,21 @@
+/* Syntax-highlighted code */
+pre, code {
+    font-family: "Fira Code", monospace;
+    font-size: 0.95em;
+    line-height: 1.5em;
+}
+
+/* Shadowed explanation block */
+pre.explain {
+  background: #f9f9f9;
+  border-left: 4px solid #007acc;
+  padding: 1em;
+  margin: 1.5em 0;
+  font-family: "Fira Code", monospace;
+  font-size: 0.95em;
+  line-height: 1.5em;
+  color: #333;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  white-space: pre-wrap;
+}
