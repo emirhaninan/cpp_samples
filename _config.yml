@@ -8,3 +8,6 @@ markdown: kramdown
 
 kramdown:
   syntax_highlighter: rouge
+
+# Generate clean URLs like /roman-to-int.html instead of dated paths
+permalink: /:title.html
